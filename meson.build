@@ -8,3 +8,7 @@ project(
     'cpp_std=c++17',
   ]
 )
+
+llvm_dep = dependency('llvm', include_type: 'system')
+
+subdir('tools')
