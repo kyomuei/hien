@@ -11,4 +11,6 @@ project(
 
 llvm_dep = dependency('llvm', include_type: 'system')
 
+gtest_dep = dependency('gtest')
+
 subdir('tools')
