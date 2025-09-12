@@ -1,0 +1,5 @@
+{
+    "C_Cpp.default.compileCommands": "${workspaceFolder}/${config:mesonbuild.buildFolder}/compile_commands.json",
+    "C_Cpp.default.configurationProvider": "mesonbuild.mesonbuild",
+    "mesonbuild.modifySettings": false,
+}

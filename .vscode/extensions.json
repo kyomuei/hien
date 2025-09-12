@@ -1,0 +1,7 @@
+{
+    "recommendations": [
+        "asciidoctor.asciidoctor-vscode",
+        "mesonbuild.mesonbuild",
+        "ms-vscode.cpptools",
+    ]
+}
