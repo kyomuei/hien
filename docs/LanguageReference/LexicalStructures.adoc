@@ -1,0 +1,30 @@
+= Lexical Structure
+
+== Literals
+
+____
+*Grammer of a literal:*
+
+_literal_
+    -> _integer-literal_
+
+____
+
+=== Integer Literals
+
+____
+*Grammer of an integer literal:*
+
+_integer-literal_
+    -> _decimal-literal_
+
+_decimal-literal_
+    -> _decimal-digit_ _decimal-digit-characters?_ +
+_decimal-digit_
+    ->  `1` | `2` | `3` | `4` | `5` | `6` | `7` | `8` | `9` | `0` +
+_decimal-digit-characters_
+    -> _decimal-digit-character_ _decimal-digit-characters?_ +
+_decimal-digit-character_
+    -> _decimal-digit_
+
+____
