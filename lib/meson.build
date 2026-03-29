@@ -3,7 +3,6 @@ lib_util = static_library(
     'util',
     [
         'util/Range.c',
-        'util/RawBuffer.c',
     ],
     include_directories: [include_dir],
 )
@@ -11,6 +10,7 @@ lib_util = static_library(
 lib_syntax = static_library(
     'syntax',
     [
+        'syntax/SourceBuffer.c',
         'syntax/SyntaxText.c',
     ],
     include_directories: [include_dir],
