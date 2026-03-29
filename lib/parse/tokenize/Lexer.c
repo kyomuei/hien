@@ -2,11 +2,11 @@
 
 #include "hien/parse/tokenize/Lexeme.h"
 #include "hien/syntax/TokenKind.h"
+#include "hien/syntax/SourceBuffer.h"
 #include "hien/util/Range.h"
-#include "hien/util/RawBuffer.h"
 #include <assert.h>
 
-Lexer_t Lexer_init(RawBuffer_t source) {
+Lexer_t Lexer_init(SourceBuffer_t source) {
     Lexer_t lexer = (Lexer_t) {
         .source = source,
         .cursor = source,
@@ -29,7 +29,7 @@ Lexeme_t Lexer_peek(Lexer_t const *self) {
     return self->nextToken;
 }
 
-static int lexIntegerLiteral(RawBuffer_t cursor);
+static int lexIntegerLiteral(SourceBuffer_t cursor);
 
 static void Lexer_lexNextToken(Lexer_t *self) {
 
@@ -38,7 +38,7 @@ static void Lexer_lexNextToken(Lexer_t *self) {
     }
 
     TokenKind_t kind = TOKENKIND_UNKNOWN;
-    char const *start = (char const *) self->cursor.baseAddress;
+    char const *start = SourceBuffer_baseAddress(self->cursor);
     int length = 1;
 
     switch (*start) {
@@ -54,19 +54,19 @@ static void Lexer_lexNextToken(Lexer_t *self) {
         break;
     }
 
-    self->cursor = RawBuffer_slice(self->cursor, Range_init(length, self->cursor.count));
+    self->cursor = SourceBuffer_skip(self->cursor, length);
     self->nextToken = Lexeme_init(kind, start, length);
 }
 
-static int lexIntegerLiteral(RawBuffer_t cursor) {
-    char const *base = cursor.baseAddress;
+static int lexIntegerLiteral(SourceBuffer_t cursor) {
+    char const *base = SourceBuffer_baseAddress(cursor);
     assert('0' <= *base && *base <= '9');
 
-    FOR_IN_RANGE(offset, Range_init(0, cursor.count)) {
+    FOR_IN_RANGE(offset, Range_init(0, SourceBuffer_count(cursor))) {
         if (!('0' <= base[offset] && base[offset] <= '9')) {
             return offset;
         }
     }
 
-    return cursor.count;
+    return SourceBuffer_count(cursor);
 }
