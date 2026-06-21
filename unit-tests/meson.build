@@ -3,6 +3,7 @@ libparse_ut_exe = executable(
     'parse-tests',
     [
         'TestMain.cpp',
+        'ParseTests/ParseTests.cpp',
         'ParseTests/TokenizeTests.cpp',
     ],
     include_directories: [include_dir],
