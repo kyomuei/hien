@@ -2,6 +2,7 @@
 
 #include "hien/parse/tokenize/Lexeme.h"
 #include "hien/parse/Parser.h"
+#include "hien/syntax/SyntaxKind.h"
 #include "hien/syntax/SyntaxNode.h"
 #include "hien/syntax/TokenKind.h"
 #include "parse/Parser.h"
@@ -13,6 +14,17 @@ SyntaxNode_t * Parser_parse(SyntaxText_t source) {
 }
 
 SyntaxNode_t * Parser_parseSourceFile(Parser_t *self) {
+    if (Parser_isAt(self, TOKENKIND_END_OF_FILE)) {
+        SyntaxNode_t *node = calloc(1, sizeof(SyntaxNode_t));
+        *node = (SyntaxNode_t) {
+            .kind = SYNTAXKIND_SOURCEFILE,
+            .childrenCount = 0,
+            .children = NULL,
+        };
+
+        return node;
+    }
+
     SyntaxNode_t *number =  Parser_parseNumber(self);
     SyntaxNode_t *node = calloc(1, sizeof(SyntaxNode_t));
     SyntaxNode_t **children = calloc(1, sizeof(SyntaxNode_t *));
