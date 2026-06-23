@@ -37,6 +37,11 @@ static void Lexer_lexNextToken(Lexer_t *self) {
         return;
     }
 
+    if (SourceBuffer_isEmpty(self->cursor)) {
+        self->nextToken = Lexeme_init(TOKENKIND_END_OF_FILE, "", 0);
+        return;
+    }
+
     TokenKind_t kind = TOKENKIND_UNKNOWN;
     char const *start = SourceBuffer_baseAddress(self->cursor);
     int length = 1;

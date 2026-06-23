@@ -30,6 +30,16 @@ void toJson(SyntaxNode_t *node, std::string &result) {
     }
 }
 
+TEST(ParseTests, testEmpty) {
+    SyntaxText_t source = SyntaxText_empty();
+    SyntaxNode_t *root = Parser_parse(source);
+
+    std::string expected = "{\"kind\":\"SourceFile\",\"children\":[]}";
+    std::string actual;
+    toJson(root, actual);
+    ASSERT_EQ(expected, actual);
+}
+
 TEST(ParseTests, testParse) {
     SyntaxText_t source = SyntaxText_fromLiteral("1234567890");
     SyntaxNode_t *root = Parser_parse(source);

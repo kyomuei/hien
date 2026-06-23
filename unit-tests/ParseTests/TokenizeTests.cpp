@@ -22,6 +22,10 @@ class TokenizeTests : public testing::Test {};
 
 static void assertLexemes(std::string source, std::vector<LexemeSpec> expectedLexemes, char const * file, int line);
 
+TEST(TokenizeTests, testEmpty) {
+    assertLexemes("", {}, __FILE__, __LINE__);
+}
+
 TEST(TokenizeTests, testIntegerLiterals) {
     assertLexemes(
         "1234567890",

@@ -1,0 +1,9 @@
+= SourceFile
+
+____
+*Grammer of a source file:*
+
+_source-file_
+    -> _xref:LexicalStructures.adoc#literals[literal,window=_blank]?_
+
+____
