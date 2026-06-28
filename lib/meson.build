@@ -29,3 +29,12 @@ lib_parse = static_library(
     include_directories: [include_dir],
     link_with: [lib_util, lib_syntax],
 )
+
+lib_codegen = static_library(
+    'codegen',
+    [
+        'codegen/codegen.c',
+    ],
+    include_directories: [include_dir],
+    link_with: [lib_syntax],
+)
