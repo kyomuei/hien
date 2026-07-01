@@ -1,5 +1,17 @@
 = Lexical Structure
 
+== Whitespace
+
+____
+*Grammer of a whitespace:*
+
+_whitespace_
+    -> _whitespacce-item_ _whitespace?_
+
+_whitespace-item_
+    -> U+0020
+____
+
 == Literals
 
 ____

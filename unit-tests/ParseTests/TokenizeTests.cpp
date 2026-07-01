@@ -26,6 +26,16 @@ TEST(TokenizeTests, testEmpty) {
     assertLexemes("", {}, __FILE__, __LINE__);
 }
 
+TEST(TokenizeTests, testSkipWhiteSpace) {
+    assertLexemes(
+        " 1234567890  ",
+        {
+            LexemeSpec{ .tokenKind = TOKENKIND_INTEGER_LITERAL, .tokenText = "1234567890" },
+        },
+        __FILE__, __LINE__
+    );
+}
+
 TEST(TokenizeTests, testIntegerLiterals) {
     assertLexemes(
         "1234567890",

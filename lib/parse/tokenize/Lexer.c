@@ -29,6 +29,7 @@ Lexeme_t Lexer_peek(Lexer_t const *self) {
     return self->nextToken;
 }
 
+static int lexTrivia(SourceBuffer_t cursor);
 static int lexIntegerLiteral(SourceBuffer_t cursor);
 
 static void Lexer_lexNextToken(Lexer_t *self) {
@@ -41,6 +42,9 @@ static void Lexer_lexNextToken(Lexer_t *self) {
         self->nextToken = Lexeme_init(TOKENKIND_END_OF_FILE, "", 0);
         return;
     }
+
+    int triviaLength = lexTrivia(self->cursor);
+    self->cursor = SourceBuffer_skip(self->cursor, triviaLength);
 
     TokenKind_t kind = TOKENKIND_UNKNOWN;
     char const *start = SourceBuffer_baseAddress(self->cursor);
@@ -61,6 +65,18 @@ static void Lexer_lexNextToken(Lexer_t *self) {
 
     self->cursor = SourceBuffer_skip(self->cursor, length);
     self->nextToken = Lexeme_init(kind, start, length);
+}
+
+static int lexTrivia(SourceBuffer_t cursor) {
+    assert(!SourceBuffer_isEmpty(cursor));
+    char const *base = SourceBuffer_baseAddress(cursor);
+    FOR_IN_RANGE(offset, Range_init(0, SourceBuffer_count(cursor))) {
+        if (base[offset] != ' ') {
+            return offset;
+        }
+    }
+
+    return SourceBuffer_count(cursor);
 }
 
 static int lexIntegerLiteral(SourceBuffer_t cursor) {
