@@ -5,4 +5,8 @@
 
 SyntaxNode_t * Parser_parseSourceFile(Parser_t *self);
 
+SyntaxNode_t * Parser_parseStatement(Parser_t *self);
+
+SyntaxNode_t * Parser_parseReturnStatement(Parser_t *self);
+
 SyntaxNode_t * Parser_parseNumber(Parser_t *self);
