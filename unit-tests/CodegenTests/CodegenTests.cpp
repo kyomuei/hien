@@ -36,7 +36,7 @@ TEST_F(CodegenTests, testEmptySource) {
 }
 
 TEST_F(CodegenTests, testCodegen) {
-    SyntaxNode_t *source = Parser_parse(SyntaxText_fromLiteral("42"));
+    SyntaxNode_t *source = Parser_parse(SyntaxText_fromLiteral("return 42"));
     assertExecAsmCode(source, tempDir, "testCodegen", 42, __FILE__, __LINE__);
 }
 

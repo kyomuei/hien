@@ -14,15 +14,25 @@ void codegen(SyntaxNode_t *node, FILE *output) {
         fprintf(output, "_main:\n");
         if (node->childrenCount == 0) {
             fprintf(output, "  mov w0, #0\n");
+            fprintf(output, "  ret\n");
+        } else {
+            for (int i = 0; i < node->childrenCount; i++) {
+                codegen(node->children[0], output);
+            }
+        }
+        break;
+    case SYNTAXKIND_NUMBER:
+        fprintf(output, "  mov w0, #%*s\n", SyntaxText_count(node->text), SyntaxText_baseAddress(node->text));
+        break;
+    case SYNTAXKIND_STMT_RETURN:
+        if (node->childrenCount == 0) {
+            fprintf(output, "  mov w0, #0\n");
         } else {
             for (int i = 0; i < node->childrenCount; i++) {
                 codegen(node->children[0], output);
             }
         }
         fprintf(output, "  ret\n");
-        break;
-    case SYNTAXKIND_NUMBER:
-        fprintf(output, "  mov w0, #%*s\n", SyntaxText_count(node->text), SyntaxText_baseAddress(node->text));
         break;
     default:
         exit(1);
