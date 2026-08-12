@@ -1,5 +1,6 @@
 #pragma once
 
+#include "hien/syntax/SyntaxText.h"
 #include "hien/syntax/TokenKind.h"
 
 typedef struct Lexeme_t {
@@ -13,3 +14,5 @@ Lexeme_t Lexeme_init(
     char const *start,
     int textLength
 );
+
+SyntaxText_t Lexeme_tokenText(Lexeme_t self);
