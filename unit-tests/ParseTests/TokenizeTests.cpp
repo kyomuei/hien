@@ -46,6 +46,15 @@ TEST(TokenizeTests, testIntegerLiterals) {
     );
 }
 
+TEST(TokenizeTests, testKeywords) {
+    assertLexemes(
+        "return", {
+            LexemeSpec{ .tokenKind = TOKENKIND_KEYWORD , .tokenText = "return" },
+        }, 
+        __FILE__, __LINE__
+    );
+}
+
 
 static void assertTokens(std::vector<Lexeme_t> actualLexemes, std::vector<LexemeSpec> expectedLexemes, char const * file, int line);
 
