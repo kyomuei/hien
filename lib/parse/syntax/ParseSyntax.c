@@ -6,6 +6,7 @@
 #include "hien/syntax/SyntaxNode.h"
 #include "hien/syntax/TokenKind.h"
 #include "parse/Parser.h"
+#include "parse/TokenSpec.h"
 #include <stdlib.h>
 
 SyntaxNode_t * Parser_parse(SyntaxText_t source) {
@@ -14,7 +15,7 @@ SyntaxNode_t * Parser_parse(SyntaxText_t source) {
 }
 
 SyntaxNode_t * Parser_parseSourceFile(Parser_t *self) {
-    if (Parser_isAt(self, TOKENKIND_END_OF_FILE)) {
+    if (Parser_isAt(self, TokenSpec_token(TOKENKIND_END_OF_FILE))) {
         SyntaxNode_t *node = calloc(1, sizeof(SyntaxNode_t));
         *node = (SyntaxNode_t) {
             .kind = SYNTAXKIND_SOURCEFILE,
@@ -35,7 +36,7 @@ SyntaxNode_t * Parser_parseSourceFile(Parser_t *self) {
         .childrenCount = 1,
     };
     
-    if (!Parser_consumeIf(self, TOKENKIND_END_OF_FILE)) {
+    if (!Parser_consumeIf(self, TokenSpec_token(TOKENKIND_END_OF_FILE))) {
         exit(1);
     }
 
@@ -44,7 +45,7 @@ SyntaxNode_t * Parser_parseSourceFile(Parser_t *self) {
 
 SyntaxNode_t *Parser_parseNumber(Parser_t *self) {
     Lexeme_t token = self->currentToken;
-    if (Parser_consumeIf(self, TOKENKIND_INTEGER_LITERAL)) {
+    if (Parser_consumeIf(self, TokenSpec_token(TOKENKIND_INTEGER_LITERAL))) {
         SyntaxNode_t *node = calloc(1, sizeof(SyntaxNode_t));
         *node = (SyntaxNode_t) {
             .kind = SYNTAXKIND_NUMBER,
