@@ -10,6 +10,7 @@ lib_util = static_library(
 lib_syntax = static_library(
     'syntax',
     [
+        'syntax/Keyword.c',
         'syntax/SourceBuffer.c',
         'syntax/SyntaxNode.c',
         'syntax/SyntaxText.c',
@@ -22,6 +23,7 @@ lib_parse = static_library(
     'parse',
     [
         'parse/syntax/ParseSyntax.c',
+        'parse/tokenize/CharacterClass.c',
         'parse/tokenize/Lexeme.c',
         'parse/tokenize/Lexer.c',
         'parse/Parser.c',
