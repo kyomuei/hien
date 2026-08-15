@@ -7,6 +7,6 @@ _statement_
     -> _return-statement_
 
 _return-statement_
-    -> `return` _xref:LexicalStructures.adoc#literals[literal,window=_blank]?_
+    -> `return` _xref:Expressions.adoc#expressions[expression,window=_blank]?_
 
 ____

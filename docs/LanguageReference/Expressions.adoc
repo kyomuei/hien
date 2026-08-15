@@ -1,0 +1,11 @@
+= Expressions
+
+____
+*Grammer of an expressions:*
+
+_expression_
+    -> _number-expression_
+
+_number-expression_
+    -> _xref:LexicalStructures.adoc#literals[literal,window=_blank]_
+____

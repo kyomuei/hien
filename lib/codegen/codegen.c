@@ -21,7 +21,7 @@ void codegen(SyntaxNode_t *node, FILE *output) {
             }
         }
         break;
-    case SYNTAXKIND_NUMBER:
+    case SYNTAXKIND_EXPR_NUMBER:
         fprintf(output, "  mov w0, #%*s\n", SyntaxText_count(node->text), SyntaxText_baseAddress(node->text));
         break;
     case SYNTAXKIND_STMT_RETURN:

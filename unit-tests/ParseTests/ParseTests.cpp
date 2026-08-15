@@ -20,7 +20,7 @@ void toJson(SyntaxNode_t *node, std::string &result) {
         }
         result.append("]}");
         break;
-    case SYNTAXKIND_NUMBER:
+    case SYNTAXKIND_EXPR_NUMBER:
         result.append("{\"kind\":\"Number\",\"text\":\"");
         result.append(std::string(SyntaxText_baseAddress(node->text), SyntaxText_count(node->text)));
         result.append("\"}");

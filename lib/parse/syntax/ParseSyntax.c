@@ -8,6 +8,8 @@
 #include "hien/syntax/TokenKind.h"
 #include "parse/Parser.h"
 #include "parse/TokenSpec.h"
+#include "parse/TokenSpecSet.h"
+#include <assert.h>
 #include <stdlib.h>
 
 SyntaxNode_t * Parser_parse(SyntaxText_t source) {
@@ -53,9 +55,9 @@ SyntaxNode_t * Parser_parseReturnStatement(Parser_t *self) {
     SyntaxNode_t **children = NULL;
     int childrenCount = 0;
 
-    if (Parser_isAt(self, TokenSpec_token(TOKENKIND_INTEGER_LITERAL))) {
+    if (Parser_isAtStartOfExpression(self)) {
         children = calloc(1, sizeof(SyntaxNode_t *));
-        children[0] = Parser_parseNumber(self);
+        children[0] = Parser_parseExpression(self);
         childrenCount = 1;
     }
 
@@ -68,16 +70,31 @@ SyntaxNode_t * Parser_parseReturnStatement(Parser_t *self) {
     return node;
 }
 
-SyntaxNode_t *Parser_parseNumber(Parser_t *self) {
-    Lexeme_t token = self->currentToken;
-    if (Parser_consumeIf(self, TokenSpec_token(TOKENKIND_INTEGER_LITERAL))) {
-        SyntaxNode_t *node = calloc(1, sizeof(SyntaxNode_t));
-        *node = (SyntaxNode_t) {
-            .kind = SYNTAXKIND_NUMBER,
-            .text = Lexeme_tokenText(token),
-        };
-        return node;
+SyntaxNode_t * Parser_parseExpression(Parser_t *self) {
+    switch (ExpressionStart_lookup(self->currentToken)) {
+    case EXPRSTART_INTEGERLITERAL:
+        return Parser_parseNumberExpression(self);
+    case MAX_EXPRSTART:
+        exit(1);
     }
+}
 
-    exit(1);
+SyntaxNode_t * Parser_parseNumberExpression(Parser_t *self) {
+    assert(Parser_isAt(self, TokenSpec_token(TOKENKIND_INTEGER_LITERAL)));
+    SyntaxNode_t *node = calloc(1, sizeof(SyntaxNode_t));
+    *node = (SyntaxNode_t) {
+        .kind = SYNTAXKIND_EXPR_NUMBER,
+        .text = Lexeme_tokenText(self->currentToken),
+    };
+    Parser_eat(self, TokenSpec_token(TOKENKIND_INTEGER_LITERAL));
+    return node;
+}
+
+bool Parser_isAtStartOfExpression(Parser_t const *self) {
+    switch (ExpressionStart_lookup(self->currentToken)) {
+    case MAX_EXPRSTART:
+        return false;
+    default:
+        return true;
+    }
 }

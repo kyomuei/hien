@@ -28,6 +28,7 @@ lib_parse = static_library(
         'parse/tokenize/Lexer.c',
         'parse/Parser.c',
         'parse/TokenSpec.c',
+        'parse/TokenSpecSet.c',
     ],
     include_directories: [include_dir],
     link_with: [lib_util, lib_syntax],
